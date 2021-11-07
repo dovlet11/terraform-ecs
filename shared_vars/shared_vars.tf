@@ -23,9 +23,7 @@ output "env" {
   value = local.env_suffix
 }
 
-output "instance_type" {
-  value = lookup(local.instance_types, local.env_suffix)
-}
+
 
 output "default_tags" {
   value = {

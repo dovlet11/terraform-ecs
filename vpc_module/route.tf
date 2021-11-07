@@ -3,7 +3,7 @@ resource "aws_route_table" "public" {
 
   route = []
 
-  tags = merge(module.shared_vars.default_tags, {
+  tags = merge(var.default_tags, {
     "Name" = "ECS public-rt"
   })
 }
@@ -15,10 +15,9 @@ resource "aws_route" "public" {
 }
 
 resource "aws_route_table_association" "public" {
-  count = length(var.public_sub)
-
-  subnet_id      = element(aws_subnet.public_sub.*.id, count.index)
   route_table_id = aws_route_table.public.id
-
   depends_on = [aws_subnet.public_sub]
+
+  count = length(var.public_sub)
+  subnet_id      = element(aws_subnet.public_sub.*.id, count.index)
 }
